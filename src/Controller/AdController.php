@@ -53,12 +53,15 @@ class AdController extends AbstractController
                    // Je demade au manager de persister l'image 
                    $manager->persist($image);
                  }
+                  //Recuperation de l'auteur de l'annonce 
+                  $ad->setAuthor($this->getUser());
+                  
 
                 //Appel au manager de doctrine pour en registrement dans la BD
                  //$manager=$this->getDoctrine()->getManager();
-                //Persistance de la nouvvelle annonce 
+                //On demande a notre manager de persister
                 $manager->persist($ad);
-                //Envoie de la requête dans la base de donnée
+                //Envoie dse données dans la  BD 
                 $manager->flush();
                   //Ajout d'une Flash
                  $this->addFlash(
