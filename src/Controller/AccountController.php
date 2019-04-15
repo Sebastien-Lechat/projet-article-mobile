@@ -7,6 +7,8 @@ use App\Form\PasswordUpdateType;
 use App\Form\AccountType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Form\RegistrationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,12 +29,12 @@ class AccountController extends AbstractController
         $error=$utils->getLastAuthenticationError();
         //Obtenir le dernier utilisateur connecté 
         $username=$utils->getLastUsername();
-
-
-        
+      
         return $this->render('account/login.html.twig', ['hasError'=>$error==!null, 'username'=>$username
 
         ]);
+         //Redirection vers la page d'accueil 
+         return $this->redirectToRoute('home_index');
     }
      /**
       * Permet de se deconnecter 
@@ -84,6 +86,7 @@ class AccountController extends AbstractController
     /**
      * Permet d'affichier et de traiter le formulaire de modification de profil
      *@Route("/account/profile", name="account_profile")
+     *@IsGranted("ROLE_USER")
      *@return Response 
      */
     public function profile(Request $request, ObjectManager  $manager ){
@@ -110,6 +113,7 @@ class AccountController extends AbstractController
      * Permet de modifier le mot de passe 
      *
      * @Route("/account/password_update", name="account_password")
+     * @IsGranted("ROLE_USER")
      */
     public function  updatePassword(Request $request, UserPasswordEncoderInterface $encoder,
           ObjectManager $manager )
@@ -129,11 +133,15 @@ class AccountController extends AbstractController
                 $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez 
                 tapé n'est pas votre mot de passe actuel !"));
            }else{
-
+                    //Créer un nouveau mot de passe 
                $newPassword=$passwordUpdate->getNewPassword();
+                  //Encodage  du mot de passe 
                $hash=$encoder->encodePassword($user, $newPassword);
+                //lecture du mot de passe encoder
                $user->setHash($hash);
+                 // On demade au manager de persister 
                $manager->persist($user);
+                // Formule magique 
                $manager->flush();
                 //Ajout d'un message flash
                $this->addFlash('success',
@@ -148,8 +156,9 @@ class AccountController extends AbstractController
     }
 
      /**
-      * Permet d'affaichier le compte de l'utlisateur 
+      * Permet d'affaichier le proofilt de l'utlisateur connecté
       *@Route("/account", name="account_index")
+      *@IsGranted("ROLE_USER")
       * @return Response
       */
      public function myAccount(){

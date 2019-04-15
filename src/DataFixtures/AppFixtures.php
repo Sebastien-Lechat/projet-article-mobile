@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 use App\Entity\User;
+use APP\Entity\Role;
 use App\Entity\Ad;
 use Faker\Factory;
 use App\Entity\Image;
@@ -23,17 +24,36 @@ class AppFixtures extends Fixture
     {
         // Création de Faker 
         $faker=Factory::create('FR-fr');
-        //instanciation de slugify  histoire creer un titre et d'en faire une url 
+         // Création  d'une instance de la class Role
+         $adminRole= new Role();
+         $adminRole->setTitle('ROLE_ADMIN');
+         // On vas demander notre manager de persister 
+         $manager->persist($adminRole);
+          //Creation d'une instace  User 
+           $adminUser= new User ();
+           $adminUser->setFirstName('Mamady')
+                      ->setLastName('Kallo')
+                      ->setEmail('lamine1@gmail.com')
+                      ->setHash($this->encoder->encodePassword($adminUser, 'password'))
+                      ->setficture('https://Avatars.ior/twitter/tr')
+                      ->setIntroduction($faker->sentence())
+                      ->setDescription('<p>'. join('</p><p>', $faker->paragraphs(3)) . '</p>')
+                      ->addUserRole($adminRole);
+                      //La persistance
+                       $manager->persist($adminUser);
+        //instanciation de slugify pour créer une Url 
         //$slugify=  new  Slugify();
-        //ON boucle 
-         // Nous gerons les utilisateurs 
-          // on boucle 
+          // Declaration d'une variable qui va afficher utilisatteurs dans un tableau 
           $users=[];
+           // Declaration Genres 
           $genres= ['male', 'female'];
+          // On boucle les images 1  a 10
           for($i=1; $i<=10; $i++){
              //Création d'une instance de la classe User
              $user= new  User();
+             //Recuperation de genre
             $genre=$faker->randomElement($genres);
+              //Recuperation pour les avatars 
             $ficture='https://randomuser.me/api/portraits/';
               //Choix des photos entre 1 et 99
             $fictureId=$faker->numberBetween(1, 99). '.jpg';
