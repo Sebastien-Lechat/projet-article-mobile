@@ -29,13 +29,10 @@ class AccountController extends AbstractController
         $error=$utils->getLastAuthenticationError();
         //Obtenir le dernier utilisateur connecté 
         $username=$utils->getLastUsername();
-      
         return $this->render('account/login.html.twig', ['hasError'=>$error==!null, 'username'=>$username
 
         ]);
-         //Redirection vers la page d'accueil 
-         return $this->redirectToRoute('home_index');
-    }
+    } 
      /**
       * Permet de se deconnecter 
       * 
@@ -165,5 +162,17 @@ class AccountController extends AbstractController
 
       return $this->render('user/index.html.twig', ['user'=>$this->getUser()]);
 
+     }
+     
+     /**
+      * Permet d'afficher la liste des réservations faites par l'utilisateurs 
+      * @Route("/account/bookings", name="account_bookings")
+      * 
+      * @return  Response 
+      */
+
+     public function bookings(){
+
+      return $this->render('account/bookings.html.twig');
      }
 }

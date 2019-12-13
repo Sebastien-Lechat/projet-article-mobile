@@ -1,0 +1,58 @@
+{% extends 'base.html.twig'%}
+
+{% block   title %}  Vos réservartions passées et a venir !       {%  endblock %}
+
+{%  block body %}
+      
+     <div class="container">
+        <h1 class="my-5"> Mes réservartions ! </h1>
+          <div class="alert alert-info mt-5">
+                <p>  Retrouvez ci-dessous toutes vos réservartions passées et a vesnir  !</p>
+
+          </div>
+           
+           {%  for booking in app.user.bookings %}
+            
+             {% set ad=booking.ad %}
+             
+               <div class="row mt-5">
+               
+                  <div  class="col-md_4">
+                       <img src="{{ad.coverImage}}" class="img-fluid" alt="Photo de l'annonce{{booking.ad.title}}">
+
+                       <div class="mt-3">
+                           {% set comment = ad.getCommentFromAuthor(app.user) %}
+                         {% if comment is not null %}
+                               <blockquote>
+                               {{comment.content}}
+                               <blockquote>
+                               <strong> Note donnée :</strong>{% include 'partials/rating.html.twig' with {'rating':comment.rating } %}
+
+                         {% else %}
+                            Vous n'avez pas encore donné de note.
+                             <a href="{{path ('booking_show', {'id' : booking.id})}}#comment"> Je donne mon avis !  </a>
+
+                         {% endif %}
+                       </div>
+                  </div>
+
+                  
+                  <div  class="col-md-8">
+                     <h1> {{ad.title}} </h1>
+                     <p>
+                         réservartions <strong> n°{{booking.id}} </strong><br>
+                         Du {{booking.startDate | date('d/m/y')}} au {{booking.endDate | date('d/m/y')}}
+                         ({{booking.amount | number_format(2, ',', '')}} &euro;)
+
+                          </p>
+                          <a href="{{path('booking_show', {'id': booking.id})}}" class="btn btn-info">
+                            Plus d'informations !</a>
+                  </div>
+
+               </div>
+
+           {% endfor %}
+     </div>
+
+
+{%  endblock %}  

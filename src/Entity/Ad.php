@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+
+use App\Entity\User;
 use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -82,11 +84,23 @@ class Ad
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Booking", mappedBy="ad")
+     */
+    private $bookings;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="ad", orphanRemoval=true)
+     */
+    private $comments;
+
     
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
   /**
    * Permet d'initialiser le slug 
@@ -106,6 +120,67 @@ class Ad
               //Creation  de slug
            $this->slug=$slugify->slugify($this->title);
          }
+    }
+         /**
+          * Permet de récuperer le commentaire d'un auteur par apport a une annonce 
+          * @param User  $author
+          * @return Comment|null
+          */
+        public function getCommentFromAuthor(User $author ){
+
+           //Ici,  je vais boucler mes commentaitres 
+
+             foreach($this->comments as $comment ){
+                 // Si le l'auteur du commentaire c'est le même que l'auteur ici, afficher le commentaire 
+                 if($comment->getAuthor() === $author ) return $comment;
+             }
+                // sinon il retoure  nul
+             return null;
+        }
+          /**
+           * Permet d'otenir la mayenne globale des notes  pour cette annonce 
+           * @return float 
+           */
+        public function getAvgRatings(){
+            //Calculer la somme des notations
+             $sum=array_reduce($this->comments->toArray(), function($total, $comment){
+                 
+                return $total + $comment->getRating();
+             }, 0);
+
+            //Faire la division pour avoir la moyenne
+             if(count($this->comments) > 0 ) return  $sum / count($this->comments);
+
+             return 0;
+        }
+
+
+       /**
+        * Permet d'otenir un tableau des jours qui ne sont pas disponible pour cette annonce 
+        *
+        * @return array Un tableau DateTime représentant les jours d'occupation
+        */
+    public function getNotAvailableDays(){
+        //Declaration d'une variable qui vas contenir les jours ou l'appartement n'est pas disponible
+        $notAvailableDays=[];
+          //on boucle ici sur chacune de réservation 
+        foreach($this->bookings as $booking){
+            //Calculer les jours qui se trouve entre la date d'arrivée et date de départ 
+            $resultat=range($booking->getStartDate()->getTimestamp(),
+                            $booking->getEndDate()->getTimestamp(),
+                            24*60*60
+        );
+           //Transformer le tableau en une veritable objet datetime 
+         $days=array_map(function($dayTimestamp){
+
+                    return new \DateTime(date('y-m-d', $dayTimestamp));
+          }, $resultat);
+           
+           $notAvailableDays=array_merge($notAvailableDays, $days);
+        }
+        
+        return $notAvailableDays;
+
     }
 
     public function getId(): ?int
@@ -236,6 +311,68 @@ class Ad
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Booking[]
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): self
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): self
+    {
+        if ($this->bookings->contains($booking)) {
+            $this->bookings->removeElement($booking);
+            // set the owning side to null (unless already changed)
+            if ($booking->getAd() === $this) {
+                $booking->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAd() === $this) {
+                $comment->setAd(null);
+            }
+        }
 
         return $this;
     }

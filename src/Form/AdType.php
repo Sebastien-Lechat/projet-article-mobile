@@ -29,7 +29,7 @@ class AdType extends ApplicationType
                    qui donne vraiment envie !"))
             ->add('content', TextareaType::class, $this->getConfiguration("Description detaillée", "Tapez une description detaillée"))
             ->add('introduction',TextType::class, $this->getConfiguration(" Introduction", "Donnez une description globale de l'annonce"))
-            ->add('rooms', IntegerType::class, $this->getConfiguration(" Nombres de chambrse", "Le nombre de chambres disponibles ") ) 
+            ->add('rooms', IntegerType::class, $this->getConfiguration(" Nombres de chambre", "Le nombre de chambres disponibles ") ) 
             ->add('price', MoneyType::class, $this->getConfiguration("Prix par nuit", "Indiquez le prix que vous voulez pour une nuit "))
                //J'ai rajouté  un sous formulaire   au formulaire principale 
             ->add('images', 

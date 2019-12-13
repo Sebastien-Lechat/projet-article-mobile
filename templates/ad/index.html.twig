@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
-{% block title %}Bienvenue sur le meilleur réseau d'appartement!{% endblock %}
+{% block title %}Bienvenue sur le meilleur réseau d'appartement !{% endblock %}
 {% block body %}
 
   <div class="container">
-            <h1 class="my-6"> Voici nos annonces d'appartements </h1>
+            <h1 class="my-5"> Voici nos annonces d'appartements </h1>
            <div  class="row">
                 {% for ad in ads %}
                   {% include 'ad/_ad.html.twig'%}
-                {%endfor%}
+                {% endfor %}
             </div> 
  </div>
         

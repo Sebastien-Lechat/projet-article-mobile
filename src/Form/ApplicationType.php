@@ -19,7 +19,7 @@ use Symfony\Component\Form\AbstractType;
         protected function getConfiguration ($label, $placeholder, $options=[])
         { 
           // On retourne le label et placeholder dans un tableau, en tenant compte de la creation automatque du slug 
-           return array_merge([ 
+           return array_merge_recursive([ 
                'label'=>$label, 
                'attr'=>['placeholder'=>$placeholder
                ]

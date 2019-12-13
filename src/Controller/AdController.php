@@ -22,9 +22,7 @@ class AdController extends AbstractController
      */
     public function index(AdRepository $repository)
     {
-           //Creation de repository 
-          //$repository=$this->getDoctrine()->getRepository(Ad::class);
-          //Je vais demandé au repository d'aller chercher toute les annones dans la base de donnée 
+          //Je vais demandé au repository de m'afficher toutes les asnnonces  
            $ads=$repository->findAll();
         return $this->render('ad/index.html.twig', ['ads'=>$ads
         ]);
@@ -41,18 +39,18 @@ class AdController extends AbstractController
           //Création de l'instance de l'entité Ad
           $ad= new Ad();
           
-          //Création de formulaire
+          //Création d'un formulaire
          $form=$this->createForm(AdType::class, $ad);
-         //permet de parcourir la requête et d'extraire les informations du formulaire
+         //Permet de parcourir la requête et d'extraire les informations du formulaire
            $form->handleRequest($request);
-           // Est ce que le formulaire a bien été  soumis ou pas et valide ?
+           // Est-ce que le formulaire a bien été  soumis ou pas et valide ?
             if ($form->isSubmitted() && $form->isValid()){
 
                  //Boucle l'image c'est a dire  vouloir passé sur chaque image 
                  foreach ($ad->getImages() as $image) {
-                   // J'ai precié a l'image quelle a appartient a l'annonce 
+                   //Precision 
                    $image->setAd($ad);
-                   // Je demade au manager de persister l'image 
+                   // Appel au manager 
                    $manager->persist($image);
                  }
                   //Recuperation de l'auteur de l'annonce 
@@ -79,7 +77,7 @@ class AdController extends AbstractController
           
      }
       /**
-     * Permet de créer le formulaisre d'edition 
+     * Permet de créer le formulaire d'edition 
      * 
      * @Route("/ads/{slug}/edit", name="ads_edit")
      * @Security("is_granted('ROLE_USER') and user === ad.getAuthor()", message="Cette annonce ne vous appartient pas,
@@ -89,16 +87,16 @@ class AdController extends AbstractController
 
     public function edit(Ad $ad , Request $request, ObjectManager $manager){
      
-          //Création de formulaire
+          //Création du formulaire
           $form=$this->createForm(AdType::class, $ad);
           //permet de parcourir la requête et d'extraire les informations du formulaire
             $form->handleRequest($request);
             // Est ce que le formulaire a bien été  soumis ou pas et valide ?
             if ($form->isSubmitted() && $form->isValid()){
 
-              //Boucle l'image c'est a dire  vouloir passé sur chaque image 
-              foreach ($ad->getImages() as $image) {
-                // J'ai precié a l'image quelle a appartient a l'annonce 
+              //On boucle les images 
+              foreach ($article->getImages() as $image) {
+                // Je precise a l'image qu'elle appartienne a l'annonce 
                 $image->setAd($ad);
                 // Je demade au manager de persister l'image 
                 $manager->persist($image);
@@ -124,7 +122,7 @@ class AdController extends AbstractController
     }
 
      /**
-      * Permet d'affichier une annonce
+      * Permet d'afficher une annonce
       * 
       *@Route("/ads/{slug}", name="ads_show")
       *@return Response 

@@ -2,7 +2,9 @@
 
 namespace App\DataFixtures;
 use App\Entity\User;
+use App\Entity\Comment;
 use APP\Entity\Role;
+use App\Entity\Booking;
 use App\Entity\Ad;
 use Faker\Factory;
 use App\Entity\Image;
@@ -31,11 +33,11 @@ class AppFixtures extends Fixture
          $manager->persist($adminRole);
           //Creation d'une instace  User 
            $adminUser= new User ();
-           $adminUser->setFirstName('Mamady')
-                      ->setLastName('Kallo')
+           $adminUser->setFirstName('Lamine')
+                      ->setLastName('Diakite')
                       ->setEmail('lamine1@gmail.com')
                       ->setHash($this->encoder->encodePassword($adminUser, 'password'))
-                      ->setficture('https://Avatars.ior/twitter/tr')
+                      ->setficture('https://randomuser.me/api/portraits/men/77.jpg')
                       ->setIntroduction($faker->sentence())
                       ->setDescription('<p>'. join('</p><p>', $faker->paragraphs(3)) . '</p>')
                       ->addUserRole($adminRole);
@@ -114,6 +116,54 @@ class AppFixtures extends Fixture
                    //La persistance 
                    $manager->persist($image);
            }
+
+             //Gestion de reservation
+
+               for($j=1; $j<=mt_rand(1, 10); $j++){
+                //Création d'une instace de la classe 
+                 $booking=  new Booking();
+                 //Céation de la date de reservation
+                $createAt=$faker->dateTimeBetween(' -6 months');
+                 //Création de la date d'entrée
+                $startDate=$faker->dateTimeBetween('-3 months ');
+                 //Durée de sejour 
+                $duration=mt_rand(1, 10); 
+                //Création de la date du fin de sejour 
+                 $endDate=(clone $startDate)->modify("+$duration  days");
+                  //calcul du prix par rappor au nombre du jour 
+                 $amount=$ad->getPrice()*$duration;
+                 $booker=$users[mt_rand(0, count($users) -1)];
+                 $comment=$faker->paragraph();
+                 $booking->setBooker($booker)
+                         ->setAd($ad)
+                         ->setStartDate($startDate)
+                         ->setEndDate($endDate)
+                         ->setCreateAt($createAt)
+                         ->setAmount($amount)
+                         ->setComment($comment);
+
+                    $manager->persist($booking);
+                  
+                    //Gestion des commentaires, ici on demande la fonction mt_rand d'aller de   0 a 1
+
+                    if(mt_rand(0, 1)){
+                     //Créartion d'une instance de la classe comment
+                      $comment= new Comment();
+                      
+                      $comment->setContent($faker->paragraph())
+                              //Note entre 1 et 5
+                              ->setRating(mt_rand(1,5))
+                              //l'auteur qui a fait la réservation 
+                              ->setAuthor($booker)
+                              ->setAd($ad);
+                              //On demande  au manager de persister 
+                              $manager->persist($comment);
+                       
+                      
+
+                    }
+
+               }
 
                 $manager->persist($ad);
         }

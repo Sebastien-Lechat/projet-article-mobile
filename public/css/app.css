@@ -2,7 +2,7 @@
 
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
  }
-div.container{
+div.container, div.container-fluid{
     margin-top: 20px;
 }
  
@@ -18,18 +18,64 @@ div.ad-title h1, div.ad-title{
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);  
 
 }
+  /** 
+ * Mise en forme de bouton Réserver et titre de l'annonce 
+ */
+   div.ad-title .btn{
 
+     margin-top: 2em;
+     font-size: 1.5em;
+     line-height: 1.5em;
+   }
+  /** 
+ * Mise en forme de l'avatar 
+ */
 .avatar{
      max-width: 128px;
      max-height: 128px;
      border-radius: 50%;
 }
+  /** 
+ * Mise en forme de l'avatar(annonce) 
+ */
 .avatar-medium{
     max-width: 64px;
     max-height: 64px;
     
 }
- .avatar-menu{
+ /** 
+ * Mise en forme de l'avatar (connexion)
+ */
+ .avatar-mini{
      max-width: 24px ;
      max-height: 24px;
  }
+
+ .avatar-micro{
+
+   max-width: 23px;
+   max-height: 23px;
+ }
+
+ .datepicker table tr td.today.disabled, .datepicker table tr td.today.disabled:hover{
+
+    color: firebrick !important;
+ }
+ 
+ span.rating i {
+      
+    color:goldenrod;
+ }
+
+ .alert a{
+
+    text-decoration: none;
+ }
+
+ .alert .btn{
+
+    color: white;
+ }
+
+
+ 
