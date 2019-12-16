@@ -1,5 +1,7 @@
 {
   "name": "Avalanche",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

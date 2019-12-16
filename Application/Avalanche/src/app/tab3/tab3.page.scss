@@ -1,1 +1,22 @@
+.flux-origin {
+    color: black;
+    text-align: center;
+}
 
+.date-publi {
+    font-size: 15px;
+    color: rgba(128, 128, 128, 0.808);
+}
+
+ion-card-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+ion-card-content {
+    max-width: 90vw;
+    max-height: 30vh;
+    text-align: justify;
+    font-size: 15px;
+}

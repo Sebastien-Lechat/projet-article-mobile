@@ -6,7 +6,10 @@ const express = require('express'),
     fluxCtrl = require('./src/route/flux'),
     app = express(),
     bdd = require('./src/modele/bdd'),
-    port = 3000
+    port = 3000,
+    cors = require('cors')
+
+app.use(cors())
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -23,21 +26,21 @@ app.get('/article', articleCtrl.getAllArticle)
 
 app.get('/flux', fluxCtrl.getAllFlux)
 
-app.post('/article', articleCtrl.addArticle)
-
-app.post('/flux', fluxCtrl.addFlux)
-
 app.get('/article/:id', articleCtrl.getArticleById)
 
 app.get('/flux/:id', fluxCtrl.getAllFlux)
 
-app.put('/article/:id', articleCtrl.updateArticle)
+// app.post('/article', articleCtrl.addArticle)
 
-app.put('/flux/:id', fluxCtrl.updateFlux)
+// app.post('/flux', fluxCtrl.addFlux)
 
-app.delete('/article/:id', articleCtrl.deleteArticle)
+// app.put('/article/:id', articleCtrl.updateArticle)
 
-app.delete('/flux/:id', fluxCtrl.deleteFlux)
+// app.put('/flux/:id', fluxCtrl.updateFlux)
+
+// app.delete('/article/:id', articleCtrl.deleteArticle)
+
+// app.delete('/flux/:id', fluxCtrl.deleteFlux)
 
 /**
  * Function qui fait un retour d'une donnée

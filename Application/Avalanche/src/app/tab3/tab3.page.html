@@ -1,9 +1,19 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Tab Three
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content></ion-content>
+<ion-content>
+    <div class="main-content">
+        <ion-grid>
+            <ion-row>
+                <ion-col size="12" *ngFor="let article of allArticle">
+                    <ion-card class="article-card" href="{{article.link}}">
+                        <h3 class="flux-origin">{{article.fluxTitle}} <span class="date-publi">{{article.date}}</span></h3>
+                        <ion-card-header class="article-title">
+                            <ion-card-title>{{article.title}}</ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content>
+                            {{article.description}}
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
