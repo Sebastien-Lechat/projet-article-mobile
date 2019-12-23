@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 
 app.post('/user', userCtrl.login)
 
-app.post('/user', userCtrl.register)
+app.post('/register', userCtrl.register)
 
 app.get('/article', articleCtrl.getAllArticle)
 

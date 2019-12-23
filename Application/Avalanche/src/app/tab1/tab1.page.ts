@@ -12,7 +12,7 @@ import { ModalArticlePage } from '../modal-article/modal-article.page';
 })
 export class Tab1Page implements OnInit {
 
-  private articleListe
+  private articleListe = []
 
   constructor(
     private article: ArticleService,
@@ -31,15 +31,24 @@ export class Tab1Page implements OnInit {
         'id': idArticle
       }
     });
-    return await modal.present();
+    return await modal.present()
   }
+
+  private doRefresh(event) {
+    this.articleListe = []
+    this.showArticle ()
+    setTimeout(() => {
+        console.log('Async operation has ended')
+        event.target.complete()
+    }, 2000)
+}
 
   public async showArticle () {
     this.article.getArticle().subscribe(data => {
       this.articleListe = data["articles"]
-      // this.articleListe.forEach(article => {
-      //   article.img = "https://pic.clubic.com/v1/images/1755972/raw?width=1200&fit=max&hash=63771b7ec65f73fb39d1696242a2ef9cdf042567"
-      // })
+      this.articleListe.forEach(article => {
+        article.update_at = article.update_at.slice(8, 10) + "-" + article.update_at.slice(5, 7) + "-" + article.update_at.slice(0, 4) + " " + article.update_at.slice(11, 19)
+      })
     })
   }
 }

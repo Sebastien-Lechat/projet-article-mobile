@@ -1,16 +1,26 @@
 <ion-content>
     <div class="main-content">
+        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="z-index:1; top: -10px;">
+            <ion-refresher-content refreshingSpinner="circles">
+            </ion-refresher-content>
+        </ion-refresher>
         <ion-grid>
             <ion-row>
                 <ion-col size="12" *ngFor="let article of articleListe" (click)="presentModal(article.id)">
                     <ion-card class="article-card">
-                        <img src="{{ article.img }}" alt="" width="100%">
+
                         <ion-card-header class="article-title">
                             <div>
                                 <ion-card-title>{{article.title}}</ion-card-title>
+                                <div>&nbsp;</div>
+                                <ion-card-subtitle>Admin {{article.update_at}}</ion-card-subtitle>
+                                <div>&nbsp;</div>
                                 <ion-card-subtitle>{{article.subtitle}}</ion-card-subtitle>
                             </div>
                         </ion-card-header>
+                        <ion-card-content>
+                            <img src="{{ article.img }}" alt="" width="100%">
+                        </ion-card-content>
                     </ion-card>
                 </ion-col>
             </ion-row>

@@ -1,31 +1,37 @@
 .article-card {
     background-color: white;
     margin: 5px 5px;
+    border-radius: 5%;
+    border: 1px solid #00000035;
     ;
 }
 
 .article-title {
-    position: absolute;
     width: 100%;
     min-height: 100%;
     max-height: 100%;
+    display: -webkit-box;
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    top: 0;
+    -webkit-box-pack: center;
     justify-content: center;
     text-align: center;
     color: black;
-    background-color: rgba(255, 255, 255, 0.513);
 }
 
 ion-card-title {
-    font-size: 27px;
+    text-align: center;
     font-weight: bold;
-    text-transform: uppercase;
+    font-size: 25px;
+    color: #00b8ff;
 }
 
 ion-card-subtitle {
     font-size: 18px;
     text-transform: none;
+}
+
+ion-card-content {
+    padding: 0
 }

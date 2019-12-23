@@ -12,6 +12,7 @@ ion-card-title {
     text-align: center;
     font-weight: bold;
     font-size: 25px;
+    color: #00b8ff
 }
 
 ion-card-content {
@@ -19,4 +20,8 @@ ion-card-content {
     max-height: 30vh;
     text-align: justify;
     font-size: 15px;
+}
+
+.article-card {
+    margin: 0
 }

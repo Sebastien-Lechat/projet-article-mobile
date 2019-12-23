@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class FluxRSSService {
+
+    private option = new HttpHeaders({
+        })
+    
 
     constructor(
         private http: HttpClient
@@ -15,6 +20,6 @@ export class FluxRSSService {
     }
 
     getOneFlux(flux: string) {
-        return this.http.get(flux, { responseType: 'text' })
+        return this.http.get(flux,{responseType: 'text', headers: this.option})
     }
 }
