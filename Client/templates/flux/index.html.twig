@@ -1,44 +1,44 @@
 {% extends 'base.html.twig' %} {% block title %}Liste des flux{% endblock %} {% block body %}
-<div class="article-container">
-    <div class="align-center" style="margin-bottom: 25px;">
-        <h1 style="margin: 0;">Flux index</h1>
-        <button type="button" class="btn btn-primary btn-add"><a href="{{ path('flux_new') }}">Creer un nouveau flux</a></button>
+<div class="content">
+    <div class="article-container">
+        <div class="align-center" style="margin-bottom: 25px;">
+            <h1 style="margin: 0;">Flux index</h1>
+            <button type="button" class="btn btn-primary btn-add"><a href="{{ path('flux_new') }}"><i class="fas fa-plus"></i> Créer un nouveau flux</a></button>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Link</th>
+                    {#
+                    <th>Created_At</th>
+                    <th>Update_At</th> #}
+                    <th style="text-align: center;">Modifier/Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flux in fluxes %}
+                <tr>
+                    <td>{{ flux.id }}</td>
+                    <td>{{ flux.name }}</td>
+                    <td>{{ flux.link }}</td>
+                    {#
+                    <td>{{ flux.createdAt ? flux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ flux.updateAt ? flux.updateAt|date('Y-m-d H:i:s') : '' }}</td> #}
+
+                    <td style="text-align: center;">
+                        <a href="{{ path('flux_show', {'id': flux.id}) }}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                        <a href="{{ path('flux_edit', {'id': flux.id}) }}" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Link</th>
-                {#
-                <th>Created_At</th>
-                <th>Update_At</th> #}
-                <th style="text-align: center;">Voir</th>
-                <th style="text-align: center;">Modifier/Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for flux in fluxes %}
-            <tr>
-                <td>{{ flux.id }}</td>
-                <td>{{ flux.name }}</td>
-                <td>{{ flux.link }}</td>
-                {#
-                <td>{{ flux.createdAt ? flux.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ flux.updateAt ? flux.updateAt|date('Y-m-d H:i:s') : '' }}</td> #}
-                <td style="text-align: center;">
-                    <button type="button" class="btn btn-primary"><a href="{{ path('flux_show', {'id': flux.id}) }}">Voir</a></button>
-                </td>
-                <td style="text-align: center;">
-                    <button type="button" class="btn btn-primary"><a href="{{ path('flux_edit', {'id': flux.id}) }}">Modifier/Supprimer</a></button>
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </div>
 {% endblock %}

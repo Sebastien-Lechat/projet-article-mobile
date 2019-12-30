@@ -72,15 +72,20 @@
 ion-title {
     text-align: center;
     font-weight: bold;
+    color: #00b8ff;
     font-size: 22px;
 }
 
+ion-content {
+    background-color: black;
+}
+
 .main-content {
-    padding-top: 20px !important;
+    padding-top: 5px !important;
     background-color: white;
     color: white;
     width: 100%;
-    min-height: 100%;
+    min-height: 90%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -94,4 +99,18 @@ status-bar {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+ion-toolbar {
+    background: black;
+    --background: black;
+}
+
+ion-header {
+    background: black;
+    --background: black;
+}
+
+ion-refresher ion-refresher-content {
+    --color: #FFF!important;
 }

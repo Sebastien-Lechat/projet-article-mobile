@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Cocur\Slugify\Slugify;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -18,16 +20,29 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 255,
+     *      minMessage = "Votre titre  doit faire plus 10 caractères",
+     *      maxMessage = "Votre titre doit faire plus de 255 caractères"
+     * )
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
+    * @ORM\Column(type="string", length=255)
+    * @Assert\Length(
+    *      min = 10,
+    *      max = 255,
+    *      minMessage = "Votre titre  doit faire plus 10 caractères",
+    *      maxMessage = "Votre titre doit faire plus de 255 caractères"
+    * )
+    */
     private $subtitle;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\length(min=100, minMessage="Votre Description doit faire plus de 100 caractères")
      */
     private $description;
 
@@ -55,6 +70,28 @@ class Article
      * @ORM\Column(type="text")
      */
     private $link;
+
+    /**
+   * Permet d'initialiser le slug 
+   * @ORM\PrePersist
+   * @ORM\PreUpdate
+   * 
+   * @return void 
+   */
+  public function initializedSlug(){
+
+    //verification de slug c-a-d le moment de la creation, mise a jour
+
+    if(empty($this->slug))
+    {
+        //Instanciation de slsug
+        $slugify= new Slugify();
+         //Creation  de slug
+      $this->link=$slugify->slugify($this->title);
+    }
+}
+
+
 
     public function getId(): ?int
     {
@@ -156,4 +193,10 @@ class Article
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getUser();
+    }
 }
+

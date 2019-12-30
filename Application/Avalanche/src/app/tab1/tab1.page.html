@@ -1,26 +1,30 @@
 <ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="z-index:1;">
+        <ion-refresher-content refreshingSpinner="circles">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-header>
+        <ion-toolbar>
+            <ion-title size="large">Article</ion-title>
+        </ion-toolbar>
+    </ion-header>
     <div class="main-content">
-        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" style="z-index:1; top: -10px;">
-            <ion-refresher-content refreshingSpinner="circles">
-            </ion-refresher-content>
-        </ion-refresher>
         <ion-grid>
             <ion-row>
                 <ion-col size="12" *ngFor="let article of articleListe" (click)="presentModal(article.id)">
                     <ion-card class="article-card">
-
-                        <ion-card-header class="article-title">
-                            <div>
-                                <ion-card-title>{{article.title}}</ion-card-title>
-                                <div>&nbsp;</div>
-                                <ion-card-subtitle>Admin {{article.update_at}}</ion-card-subtitle>
-                                <div>&nbsp;</div>
-                                <ion-card-subtitle>{{article.subtitle}}</ion-card-subtitle>
-                            </div>
-                        </ion-card-header>
-                        <ion-card-content>
-                            <img src="{{ article.img }}" alt="" width="100%">
-                        </ion-card-content>
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col size="12">
+                                    <ion-card-title>{{article.title}}</ion-card-title>
+                                    <p class="article-text">{{article.subtitle}}</p>
+                                </ion-col>
+                                <ion-col size="12">
+                                    <h5 class="date-publi">Publié par Admin le {{article.update_at}}</h5>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                        <img src="{{ article.img }}" alt="" width="100%">
                     </ion-card>
                 </ion-col>
             </ion-row>

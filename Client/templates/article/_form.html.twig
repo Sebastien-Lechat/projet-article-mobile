@@ -1,2 +1,34 @@
-{{ form_start(form) }} {{ form_widget(form) }}
-<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button> {{ form_end(form) }}
+<div class="container">
+    {{form_start(form)}}
+
+    <div class="row">
+
+        <div class="col">
+
+            <div class="alert alert-light">
+                <hr> {{form_row(form.title)}} {{form_row(form.subtitle)}} {{form_row(form.created_At)}} {{form_row(form.update_At)}} {{form_row(form.link)}}
+
+            </div>
+            <div class="alert alert-light">
+                <h2> Détails de l'artcle</h2>
+                <hr> {{form_row(form.description)}}
+
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="alert alert-light">
+                <h2> Image</h2>
+                <hr> {{form_row(form.img)}}
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="container" style="text-align: right; margin-top:0; margin-bottom:10px">
+    <div class="clearfix" style="text-align: right; float:right">
+        <button type="submit" class="btn btn-primary  float-right">
+                    <i class="fas fa-check"></i>
+                   Enregistrer </button>
+    </div>
+    <button type="button" class="btn btn-primary" style="margin: 0 15px;float:right"><a href="{{ path('article_index') }}">Voir la liste</a></button> {{form_end(form)}}

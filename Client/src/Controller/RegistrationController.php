@@ -36,6 +36,9 @@ class RegistrationController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+        
+            $this->addFlash('Success', "Votre compte a bien été créer !
+                 Vous pouvez maintenant vous connecter...");
             return $this->redirectToRoute('app_login');
          
 

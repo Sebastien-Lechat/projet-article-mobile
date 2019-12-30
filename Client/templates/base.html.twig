@@ -16,11 +16,7 @@
 </head>
 
 <body>
-    {% include 'partials/header.html.twig'%}
-    <div class="content">
-        {% block body %}{% endblock %}
-    </div>
-    {% include 'partials/footer.html.twig'%}
+    {% include 'partials/header.html.twig'%} {% block body %}{% endblock %} {% include 'partials/footer.html.twig'%}
 
     <script src="js/jquery.min.js">
     </script>

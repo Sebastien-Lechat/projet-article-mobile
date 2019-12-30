@@ -1,2 +1,22 @@
-{{ form_start(form) }} {{ form_widget(form) }}
-<button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button> {{ form_end(form) }}
+<div class="container">
+    {{form_start(form)}}
+
+    <div class="row">
+
+        <div class="col">
+
+            <div class="alert alert-light">
+                <hr> {{form_row(form.name)}} {{form_row(form.link)}} {{form_row(form.created_At)}} {{form_row(form.update_At)}}
+
+            </div>
+        </div>
+
+        <div class="clearfix" style="float: right;">
+            <button type="submit" class="btn btn-primary  float-right">
+                <i class="fas fa-check"></i>
+               Enregistrer </button>
+            <button type="button" class="btn btn-primary" style="margin: 0 15px;"><a href="{{ path('flux_index') }}">Voir liste des flux</a></button>
+        </div>
+
+        {{form_end(form)}}
+    </div>

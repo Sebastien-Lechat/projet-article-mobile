@@ -1,8 +1,4 @@
 {% extends 'base.html.twig' %} {% block title %}Nouveau Article{% endblock %} {% block body %}
-<div class="article-container">
-    <h1>Créer un nouveau Article</h1>
+<h1 class="my-5">Créer un article </h1>
 
-    {{ include('article/_form.html.twig') }}
-
-    <button type="button" class="btn btn-primary btn-add"><a href="{{ path('article_index') }}">Voir la liste</a></button>
-</div>{% endblock %}
+{{ include('article/_form.html.twig') }} {# <button type="button" class="btn btn-primary btn-add"><a href="{{ path('article_index') }}">Voir la liste</a></button> #} {% endblock %}

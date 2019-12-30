@@ -1,9 +1,13 @@
-{% extends 'base.html.twig' %} {% block title %}Modifier un Flux{% endblock %} {% block body %}
-<div class="article-container">
-    <h1>Modifier Flux_RSS</h1>
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification d'un flux{% endblock %}
+
+{% block body %}
+    <h1 class="my-5">Modification d'un Flux_RSS</h1>
 
     {{ include('flux/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <button type="button" class="btn btn-primary" style="margin: 0 15px;"><a href="{{ path('flux_index') }}">Voir liste des flux</a></button> {{ include('flux/_delete_form.html.twig') }}
-</div>
+    <a href="{{ path('flux_index') }}">Voir liste des flux</a>
+
+    {{ include('flux/_delete_form.html.twig') }}
 {% endblock %}

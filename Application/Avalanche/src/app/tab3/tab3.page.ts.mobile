@@ -13,6 +13,7 @@ export class Tab3Page implements OnInit {
     private articleTitle: string
     private articleDescription: string
     private articleDate: Date
+    private data = ["https://www.01net.com/rss/actualites/jeux/", "https://www.mamytwink.com/feed.xml", "https://api.20min.ch/rss/ro/view/137", "01 Net Jeux", "Mamytwink", "20 Minutes"]
     private xmlDoc
     private logo:string = ""
 
@@ -26,16 +27,18 @@ export class Tab3Page implements OnInit {
 
     private doRefresh(event) {
         this.allArticle = []
-        this.ngOnInit();
+        this.showFlux()
         setTimeout(() => {
+            console.log('Async operation has ended');
             event.target.complete();
         }, 2000);
     }
 
     public async showFlux() {
-        this.flux.getAllFlux().subscribe(data => {
-            for (let j = 0; j < data["flux"].length; j++) {
-                this.flux.getOneFlux(data["flux"][j].link).subscribe(result => {
+        // this.flux.getAllFlux().subscribe(data => {
+            for (let j = 0; j < 3; j++) {
+                this.flux.getOneFlux(this.data[j]).subscribe(result => {
+                // this.flux.getOneFlux(data["flux"][j].link).subscribe(result => {
                     let parser = new DOMParser();
                     this.xmlDoc = parser.parseFromString(result, "text/xml");
                     if (this.xmlDoc.getElementsByTagName("image")[0] != undefined)
@@ -57,7 +60,8 @@ export class Tab3Page implements OnInit {
                         this.articleDescription = this.articleDescription.split("<br/>")[0]
                         this.articleDate = new Date(this.xmlDoc[i].getElementsByTagName("pubDate")[0].innerHTML)
                         this.allArticle[this.count] = {
-                            "fluxTitle": data["flux"][j].name,
+                            // "fluxTitle": data["flux"][j].name,
+                            "fluxTitle": this.data[j + 3],
                             "title": this.articleTitle,
                             "pubDate": this.articleDate,
                             "date": this.articleDate.toISOString().slice(8, 10) + "-" + this.articleDate.toISOString().slice(5, 7) + "-" + this.articleDate.toISOString().slice(0, 4) + " " + this.articleDate.toTimeString().slice(0, 8),
@@ -70,7 +74,7 @@ export class Tab3Page implements OnInit {
                     this.allArticle = this.allArticle.sort(this.comp)
                 })
             }
-        })
+        // })
     }
 
     private comp(a, b) {

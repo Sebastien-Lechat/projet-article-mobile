@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -23,16 +24,19 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner votre prenom")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *  @Assert\NotBlank( message=" Veuillez renseigner votre nom !")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email( message=" Veuillez renseigner un email valide !")
      */
     private $email;
 
@@ -43,6 +47,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url( message="Veuillez donner une Url valide pour votre Avatar !")
      */
     private $avatar;
 
@@ -55,6 +60,12 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Flux", mappedBy="user")
      */
     private $userf;
+
+    // Permet d'eviter la concatenation
+    public function getFullName(){
+
+        return "{$this->firstname}{$this->lastname}";
+     }
 
     public function __construct()
     {

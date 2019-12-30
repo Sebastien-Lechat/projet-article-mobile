@@ -16,6 +16,9 @@
             "./src/Entity/.gitignore"
         ]
     },
+    "cocur/slugify": {
+        "version": "v4.0.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -156,7 +159,7 @@
         "version": "2.1.1"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.1"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.0.0"

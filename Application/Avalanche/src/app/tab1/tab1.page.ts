@@ -47,7 +47,7 @@ export class Tab1Page implements OnInit {
     this.article.getArticle().subscribe(data => {
       this.articleListe = data["articles"]
       this.articleListe.forEach(article => {
-        article.update_at = article.update_at.slice(8, 10) + "-" + article.update_at.slice(5, 7) + "-" + article.update_at.slice(0, 4) + " " + article.update_at.slice(11, 19)
+        article.update_at = article.update_at.slice(8, 10) + "-" + article.update_at.slice(5, 7) + "-" + article.update_at.slice(0, 4) + " à " + article.update_at.slice(11, 19)
       })
     })
   }

@@ -38,7 +38,7 @@ class FluxController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($flux);
             $entityManager->flush();
-
+             //Redirection vers la liste des flux 
             return $this->redirectToRoute('flux_index');
         }
 
@@ -48,7 +48,8 @@ class FluxController extends AbstractController
         ]);
     }
 
-    /**
+    /** 
+     * Permet d'afficher un flux RSS
      * @Route("/{id}", name="flux_show", methods={"GET"})
      */
     public function show(Flux $flux): Response
@@ -59,6 +60,7 @@ class FluxController extends AbstractController
     }
 
     /**
+     * Permet d'éditer un flux
      * @Route("/{id}/edit", name="flux_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Flux $flux): Response
@@ -79,6 +81,7 @@ class FluxController extends AbstractController
     }
 
     /**
+     * Permet de supprimer un flux 
      * @Route("/{id}", name="flux_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Flux $flux): Response

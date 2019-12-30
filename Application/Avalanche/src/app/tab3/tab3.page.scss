@@ -4,24 +4,27 @@
 }
 
 .date-publi {
-    font-size: 15px;
+    font-size: 12px;
     color: rgba(128, 128, 128, 0.808);
+    margin: 10px 0px 0px 0px;
 }
 
 ion-card-title {
-    text-align: center;
+    text-align: left;
     font-weight: bold;
-    font-size: 25px;
-    color: #00b8ff
+    font-size: 16px;
+    color: #00b8ff;
 }
 
-ion-card-content {
+.flux-text {
     max-width: 90vw;
     max-height: 30vh;
     text-align: justify;
     font-size: 15px;
+    margin: 0 10px 0 0;
 }
 
 .article-card {
-    margin: 0
+    margin: 0;
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }

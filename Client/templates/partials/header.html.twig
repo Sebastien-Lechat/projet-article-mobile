@@ -2,13 +2,12 @@
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">AVALANCHE</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        </button>
+      </button>
             <a class="navbar-brand" href="{{path('home_page')}}">
-                <img src="public/img/avalanche.png" alt="">
                 <p class="header-text"><span style="color: white;">AVA</span>LAN<span style="color: white;">CHE</span></p>
             </a>
         </div>
@@ -18,9 +17,37 @@
                 <li class="active"><a href="{{path('article_index')}}">Article <span class="sr-only">(current)</span></a></li>
                 <li class="active"><a href="{{path('flux_index')}}">Flux RSS</a></li>
             </ul>
-
             <ul class="nav navbar-nav navbar-right">
-                <li> <button type="button" class="btn btn-primary"> <a href="{{path('app_login')}}">Connexion</a></button></li>
+                {% if app.user %}
+                <li>
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                           <img src="{{app.user.avatar}}" class="avatar avatar-mini"  alt="">
+                              {{app.user.fullName}}  
+                   </button>
+                </li>
+
+                {% else %}
+                <li class="nav-item active">
+                    <a href="{{path('app_login')}}" class="nav-link">
+                         Connexion </a>
+                </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="{{path('app_register')}}">Inscription</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown active">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{{path('home_page')}}" aria-expanded="false">
+                  Actions <span class="caret"></span>
+                </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{path('flux_new')}}">Créer un flux</a></li>
+                        <li><a href="{{path('article_new')}}">Créer un article</a></li>
+                        <li class="divider"></li>
+                        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
